@@ -13,8 +13,11 @@ phases:
   build:
     commands:
       - docker login -u fanhousanbu -p $DOCKER_SECRET
-      - docker build -t $IMAGE_REPO_NAME:$CODEBUILD_START_TIME .
-      - docker tag $IMAGE_REPO_NAME:$CODEBUILD_START_TIME $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com.cn/$IMAGE_REPO_NAME:$CODEBUILD_START_TIME
+      #- docker build -t $IMAGE_REPO_NAME:$CODEBUILD_START_TIME .
+      #- docker tag $IMAGE_REPO_NAME:$CODEBUILD_START_TIME $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com.cn/$IMAGE_REPO_NAME:$CODEBUILD_START_TIME
+      - docker build -t devops .
+      - docker tag devops:latest public.ecr.aws/f0e5p9a6/devops:latest
+      - docker push public.ecr.aws/f0e5p9a6/devops:latest
   post_build:
     commands:
       - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com.cn/$IMAGE_REPO_NAME:$CODEBUILD_START_TIME
