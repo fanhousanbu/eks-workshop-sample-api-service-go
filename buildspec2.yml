@@ -12,7 +12,7 @@ phases:
       - docker push $REPOSITORY_URI/devops:$CODEBUILD_START_TIME
   post_build:
     commands:
-      - sed -i -e "s/\($REPOSITORY_URI\/[^:]*:\)[a-z0-9_-]*/\1$CODEBUILD_START_TIME/g" hello-k8s.yml
+      - sed -i -e "s/\($REPOSITORY_URI/devops\/[^:]*:\)[a-z0-9_-]*/\1$CODEBUILD_START_TIME/g" hello-k8s.yml
       - aws configure set access_key $ACCESS_KEY
       - aws configure set secret_key $ACCESS_SECRET
       - aws eks update-kubeconfig --region $AWS_REGION --name $EKS_CLUSTER_NAME
