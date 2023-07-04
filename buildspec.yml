@@ -11,19 +11,19 @@ phases:
   pre_build:
       commands:
         - TAG="$REPOSITORY_NAME.$REPOSITORY_BRANCH.$ENVIRONMENT_NAME.$(date +%Y-%m-%d.%H.%M.%S).$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | head -c 8)"
-        - sed -i 's@CONTAINER_IMAGE@'"$REPOSITORY_URI:latest"'@' hello-k8s.yml
+        - sed -i 's@CONTAINER_IMAGE@'"$REPOSITORY_URI/devops:latest"'@' hello-k8s.yml
         - cat hello-k8s.yml
         - $(aws ecr get-login --no-include-email)
         - export KUBECONFIG=$HOME/.kube/config
   build:
     commands:
       - docker login -u fanhousanbu -p xcworld
-      - docker build --tag $REPOSITORY_URI:latest .
+      - docker build --tag $REPOSITORY_URI/devops:latest .
 
   post_build:
     commands:
       - echo 'eyJwYXlsb2FkIjoiYUwxeC9mWlNocllrMUh2YkdTWklnQm1Ca25jcjNWWnU2MXFNZGtGbEloUXl1MEhlYUQ5cmdkaDdFOThWbkk5a0c5SEV6OTRBK3RETmttVWpDS0ZsK2l6aDBrMGdJd0RxSmFRR3FnUE85V2V2ZzVXUm9WenVaNDJuNEpUTFYyZGRMUlNFWmZhYnkvUC9tUnpZK0gvV2tSeWVQdVNnV0dMNTJ5a1JNN0xPT2c3ZEJhVnFPa3pUZmUzZ1Zqbm5UQm1PbldLUWVWWDg0Zm5YbnEreWZQb01zQWoxZGlrci9tL1M1aGRVb1h4T3VtL3JZdHFXM3Z2VnJ3bzAwYjRmcWtKMUxlcHdqZWpVZnVuck1peGJQQXltNVA1ZW5nRk1OUDVkalZBdjZoTVRmUjUxVkhqeTRqOFhEN2tuMmw3QkRZUi9rY28wNG5WdjhWdlhReEs3eklNeXZTZnA5alovQXlxZlpuZnRVTERMcnVmdFR2WkN6NVg4eC9yT25mcUFQL2NQSnNTcnY3UVRjbGtQY3dJWjdZNkQzY3JsVVpNbzVyYitia1g4eW5kN3RBa2ZxSnppcVFXd0ZrTDRMS1dmVnBMT1RmL3RSYW93TTV3TzdkUS9ic2hvWGp1T0x1dGdEU0hldGxrTGJadTlvYTdxUTg0TmwwcG5Jb3IyNFA5bSs0cEU4VkI0bzl6ZVRnV1h2TC9rMUh4TlBsRVBGWXVkYjBmU1RyQ1RPV0ppaWNFZlJuU051bndxTGQ4eW9TRzdiRUhJS0R4WFBTTFd2S1NheFY1QUNFRXJkcTdXam4zTkhvNFQxSDF5WTlRbEo2Z2ZlVnRtUTFuMTZOOXVMMkNsbWVJWXBqZVFLUGdKd2tnMVhBVUxwZXhYaG1SUXllY3M5b0pZMHFZK1JSYldYTUplVGpWZEZtY3pPUHlVTVVUSTFtMEtOR3h3U3pYWHFLV1FhZFZYOWFvaDBkdW5JekgxRjY5bmFPcmxQM09VMzNIc1VkbTFhQmExdm53S3gxMHJKakE3eENhQlhjcmQ4TzVHaXg4Q3o5bkgyd3JHSzAzYmpwUU9LRjloZDUxYjM4YlNPbkUyMzBpbWFhcmVkWFBMWjNhWGlhQmo5bnlNdzdqVS9BczhURGpIK3EvU3paVHNrN2hZRERpblJsbFZZRmo3Mzk1cXg5RU9OSnNXOHU2QkFMSTREMU0zWUpnbGVMTktEQ2FUZWRUaHYrZWwrZ05QUVAvcVg2THJBRjVwU2FXeXhQVytEalZoeENtdmJ4ZFNUZk5xWjg2SWtJaDZJVnRZNzFjRXNteDFEbVI5cTc1b1Y4VlptMGt4a29YZG5HVThTT2NESjVCWG90Y2ZwSENsaUxhUndJVjdaVFhWWTZrZys4REFvQUFCNk1wa05nQlMiLCJkYXRha2V5IjoiZXlKUVJGZ2lPaUpQVFVjMFkyUnZPSFZOVHpoMFRFOHJSMnB3WVVGMGRERTFMekJvVDAwNWFsZDBlV3hRWmxoYWF6SkVibkJhT1Rrd2JqQlVibFZqVkRWdVdFcDZVemRQTVVkWGNGQjNiRlk1VEd0UFlsUlFhR014VlRaMmIwSkdSWFJWVlc1a1V6QlVZMlp2TkVkSWIxcGlTVkVyYWpBMmRISnhOMXBtZUdGTE5WQXdTMngzZFdaek0yOUVXRFp0V1c5c2FISklNRFZtVWpGQ01scHZUM1IyT1hRcmEycFlMekpsY1V4Q01tZHhTREJPTm13d01YbHJVRmw0ZEVrd05sQnJVV2g0TmtZcmVuZHJSMFZSU1ZnMVRVTnJMeXRYVVZBeWRsTllZMkptUWpSclQxTnJVRFpuYUd4ak9HMUhUVkJOU3pjMFNFOVJRVXhSYkdOdGRqaDZkWEZaYmxCdGJEWjVkMlJTT1doTE0yOHZPVTF4TVRWVEt6ZHVhMWRuZVN0U2NVOTNlbGxFZEdJMmQxZHliMjlIV2tWR00weDJNemRyYTBoUlVTdEhkbHBTY0ZoYWVtUklRMWczZHpGTWJtbDRhbHBHZDB0RlQwOTJhWGM5UFNJc0lrbEJSQ0k2SW5ocVZEUnpTakZMUWt3d05XRlBaVUkyZUdGM1ZuaFBZbWR4YkVadlFVMVJSVE5SYTNCVmR6RTRja1UyTjNsaFFVRXpNM2xRVDJoTVdrcERkbnBRUm1oa2IyaGFkRVZaTVVaMGIyNUdhVTVEV0VaYWQyVXZNM0ZwY0dSUVJVUmhOMjk1YUdrM04ybHlha0pRUm5kalRqTkJVbVUzZEc5NFowZ3ZWRUZ1TlRsNldHYzRaVkJSVEdoVWRVYzVSM3BOYmpCd01ERkxkMHhJVUdwcVVHSnlja1pLYkhKVGIwZGliR0ZMUm04d1luQlpOVFptYVhGT1VVSk1kV3N4YlhKbE1rZE5WakJ5YW1ORldFSm5SVEp0UlZaV1FWVTJTbFJ2Y2xkRmNYRnJZMDFHWjB0U2Jua3JkRTR6YlVKWUszRnpORkpFZEVORVJrMHhaMlI1YkZoUmFDdFlkVkZsYTJWTmIxRlFkM05GU0VkM1MyVnZSbVI1Vm0xNlNFUTJjRWRqTDBNMWJYYzFkVlpwT1ZCUGRuUXhNR2t5VFRKWk9FRTFWVFk1UzB0SWVWazJTVWs0VFRKRWMxWkJaMUZhTlZSYWNEQTJMMFZoZHowOUluMD0iLCJ2ZXJzaW9uIjoiMyIsInR5cGUiOiJEQVRBX0tFWSIsImV4cGlyYXRpb24iOjE2ODg0ODE1Mjh9' | docker login --username AWS --password-stdin public.ecr.aws/f0e5p9a6
-      - docker push $REPOSITORY_URI:latest
+      - docker push $REPOSITORY_URI/devops:latest
       - CREDENTIALS=$(aws sts assume-role --role-arn arn:aws:iam::008758743766:role/codebuild-test-app-build-role --role-session-name codebuild-kubectl --duration-seconds 900)
       - export AWS_ACCESS_KEY_ID="$(echo ${CREDENTIALS} | jq -r '.Credentials.AccessKeyId')"
       - export AWS_SECRET_ACCESS_KEY="$(echo ${CREDENTIALS} | jq -r '.Credentials.SecretAccessKey')"
@@ -31,6 +31,6 @@ phases:
       - export AWS_EXPIRATION=$(echo ${CREDENTIALS} | jq -r '.Credentials.Expiration')
       - aws eks update-kubeconfig --name $EKS_CLUSTER_NAME
       - kubectl apply -f hello-k8s.yml
-      - printf '[{"name":"hello-k8s","imageUri":"%s"}]' $REPOSITORY_URI:latest > build.json
+      - printf '[{"name":"hello-k8s","imageUri":"%s"}]' $REPOSITORY_URI/devops:latest > build.json
 artifacts:
   files: build.json
