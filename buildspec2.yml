@@ -8,11 +8,10 @@ phases:
     commands:
       - docker login -u fanhousanbu -p $DOCKER_SECRET
       - docker build -t $REPOSITORY_URI/devops:$CODEBUILD_START_TIME .
-      - aws ecr-public get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com.cn      
+      - aws ecr-public get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $REPOSITORY_URI
       - docker push $REPOSITORY_URI/devops:$CODEBUILD_START_TIME
   post_build:
     commands:
-      #- docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com.cn/$IMAGE_REPO_NAME:$CODEBUILD_START_TIME
       #- sed -i -e "s/\($AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com.cn\/[^:]*:\)[a-z0-9_-]*/\1$CODEBUILD_START_TIME/g" hello-k8s.yml
       - aws configure set access_key $ACCESS_KEY
       - aws configure set secret_key $ACCESS_SECRET
