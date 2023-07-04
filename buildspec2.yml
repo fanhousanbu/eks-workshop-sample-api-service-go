@@ -20,6 +20,6 @@ phases:
       - docker push public.ecr.aws/f0e5p9a6/devops:latest
   post_build:
     commands:
-      - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com.cn/$IMAGE_REPO_NAME:$CODEBUILD_START_TIME
+      #- docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com.cn/$IMAGE_REPO_NAME:$CODEBUILD_START_TIME
       - sed -i -e "s/\($AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com.cn\/[^:]*:\)[a-z0-9_-]*/\1$CODEBUILD_START_TIME/g" hello-k8s.yml
       - kubectl apply -f hello-k8s.yml
