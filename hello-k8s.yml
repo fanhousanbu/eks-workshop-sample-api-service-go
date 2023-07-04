@@ -31,7 +31,7 @@ spec:
     spec:
       containers:
         - name: hello-k8s
-          image: CONTAINER_IMAGE
+          image: public.ecr.aws/f0e5p9a6/devops:latest
           securityContext:
             privileged: false
             readOnlyRootFilesystem: true
